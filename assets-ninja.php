@@ -51,6 +51,15 @@ class AssetsNinja {
 
 	function load_admin_assets($screen) {
 		$_screen = get_current_screen();
+
+//	--------------	print all data debug----------------
+
+//		echo "<pre";
+//		print_r($_screen);
+//		echo "</pre>";
+//		die();
+
+
 		if('edit.php' == $screen && 'page' == $_screen->post_type ) {
 			wp_enqueue_script('asn-admin-js',ASN_ASSETS_ADMIN_DIR . "/js/admin.js", array('jquery'),$this->version,true);
 		}
