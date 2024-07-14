@@ -21,6 +21,7 @@ class AssetsNinja {
 		$this->version = time();
 		add_action('plugin_loaded', array($this,'load_textdomain'));
 		add_action('wp_enqueue_scripts',array($this,'load_front_assets'));
+		add_action('admin_enqueue_scripts',array($this,'load_admin_assets'));
 	}
 
 	function load_front_assets() {
@@ -45,6 +46,17 @@ class AssetsNinja {
 		wp_localize_script('asn-another-js','sitedata',$data);
 		wp_localize_script('asn-another-js','moredata',$moredata);
 		wp_localize_script('asn-another-js','translations',$translated_strings);
+	}
+
+
+	function load_admin_assets($screen) {
+		$_screen = get_current_screen();
+		if('edit.php' == $screen && 'page' == $_screen->post_type ) {
+			wp_enqueue_script('asn-admin-js',ASN_ASSETS_ADMIN_DIR . "/js/admin.js", array('jquery'),$this->version,true);
+		}
+//		if('options-general.php' == $screen) {
+//		wp_enqueue_script('asn-admin-js',ASN_ASSETS_ADMIN_DIR . "/js/admin.js", array('jquery'),$this->version,true);
+//	 }
 	}
 
 	function load_textdomain() {
