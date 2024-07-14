@@ -26,9 +26,16 @@ class AssetsNinja {
 
 	function load_front_assets() {
 		wp_enqueue_style('asn-main-css', ASN_ASSETS_PUBLIC_DIR."/css/main.css",null,$this->version);
-		wp_enqueue_script('asn-main-js',ASN_ASSETS_PUBLIC_DIR."/js/main.js", array('jquery','asn-another-js'),$this->version,true);
-		wp_enqueue_script('asn-another-js',ASN_ASSETS_PUBLIC_DIR."/js/another.js", array('jquery'),$this->version,true);
+//		wp_enqueue_script('asn-main-js',ASN_ASSETS_PUBLIC_DIR."/js/main.js", array('jquery','asn-another-js'),$this->version,true);
+//		wp_enqueue_script('asn-another-js',ASN_ASSETS_PUBLIC_DIR."/js/another.js", array('jquery'),$this->version,true);
 
+		$js_file =array(
+			'asn-main-js'=>array('path'=>ASN_ASSETS_PUBLIC_DIR. "/js/main.js",'dep'=>array('jquery','asn-another-js')),
+			'asn-another-js'=>array('path'=>ASN_ASSETS_PUBLIC_DIR. "/js/another.js",'dep'=>array('jquery'))
+	);
+	foreach($js_file as $handle=>$fileinfo) {
+		wp_enqueue_script($handle,$fileinfo['path'],$fileinfo['dep'],$fileinfo['version'],true);
+	}
 		$data = array(
 			'name'=>"lwM",
 			'url'=>'https://google.com/'
