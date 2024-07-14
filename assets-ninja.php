@@ -12,7 +12,7 @@ Domain Path: /languages/
 */
 
 define("ASN_ASSETS_DIR", plugin_dir_url( __FILE__ )."assets/");
-define("ASN_ASSETS_PUBLIC_DIR", plugin_dir_url( __FILE__ )."assets/public");
+define("ASN_ASSETS_PUBLIC_DIR", plugin_dir_url( __FILE__ )."assets/public/");
 define("ASN_ASSETS_ADMIN_DIR", plugin_dir_url( __FILE__ )."assets/admin/");
 
 class AssetsNinja {
@@ -25,8 +25,26 @@ class AssetsNinja {
 
 	function load_front_assets() {
 		wp_enqueue_style('asn-main-css', ASN_ASSETS_PUBLIC_DIR."/css/main.css",null,$this->version);
-		wp_enqueue_script('asn-main-js',ASN_ASSETS_PUBLIC_DIR."/js/main.js", array('jquery','assetsninja-another-js'),$this->version,true);
+		wp_enqueue_script('asn-main-js',ASN_ASSETS_PUBLIC_DIR."/js/main.js", array('jquery','asn-another-js'),$this->version,true);
 		wp_enqueue_script('asn-another-js',ASN_ASSETS_PUBLIC_DIR."/js/another.js", array('jquery'),$this->version,true);
+
+		$data = array(
+			'name'=>"lwM",
+			'url'=>'https://google.com/'
+		);
+		$moredata= array(
+			'name'=>"More data Name",
+			'url'=>'https://google.com/'
+		);
+
+		$translated_strings = array(
+		    'greetings'	=> __('Hello World...','assetsninja')
+		);
+
+
+		wp_localize_script('asn-another-js','sitedata',$data);
+		wp_localize_script('asn-another-js','moredata',$moredata);
+		wp_localize_script('asn-another-js','translations',$translated_strings);
 	}
 
 	function load_textdomain() {
