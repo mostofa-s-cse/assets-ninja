@@ -19,9 +19,21 @@ class AssetsNinja {
 	private $version;
 	function __construct() {
 		$this->version = time();
+
+		add_action('init', array($this, 'asn_init'));
+
 		add_action('plugin_loaded', array($this,'load_textdomain'));
 		add_action('wp_enqueue_scripts',array($this,'load_front_assets'));
 		add_action('admin_enqueue_scripts',array($this,'load_admin_assets'));
+	}
+
+	function asn_init() {
+		wp_deregister_style('fontawesome-css');
+		wp_register_style('fontawesome-css','//use.fontawesome.com/releases/v6.5.2/css/all.css');
+
+		wp_deregister_script('tinyslider-js');
+		wp_register_script('tinyslider-js','//cdn.tinymce.com/4/tinymce.min.js',null,'1.0',true);
+
 	}
 
 	function load_front_assets() {
